@@ -16,11 +16,18 @@ namespace Letras_Simulation.Model
 
         public double GetClimb (Trackpoint b) => b.Coordinate.Altitude - Coordinate.Altitude;
 
-        /**
-         * Note that this is a rough estimate for high slopes
-         */
-        public double GetSlope (Trackpoint b)
-            => GetClimb (b) / GetDistance (b);
+        public double GetSlope (Trackpoint b) => GetClimb (b) / GetHorizontalDistance (b);
+
+        public double GetHorizontalDistance (Trackpoint b)
+        {
+            var climb = GetClimb (b);
+            var distance = GetDistance (b);
+
+            if (Math.Abs (climb) < 0.0001)
+                return distance;
+
+            return climb / Math.Tan (Math.Asin (climb / distance));
+        }
 
         public void SetLatitude (double  latitude)  => Coordinate.Latitude = latitude;
         public void SetAltitude (double  altitude)  => Coordinate.Altitude = altitude;

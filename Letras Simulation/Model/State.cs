@@ -52,7 +52,7 @@ namespace Letras_Simulation.Model
             var speed    = Speed;
             var duration = 0.0;
 
-            // Using a step length of 1 m
+            // Using a step length of 0.1 m
             var s = 0.1;
             for (var i = 0.0; i < distance; i += s)
             {
