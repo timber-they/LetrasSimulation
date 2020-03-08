@@ -49,12 +49,15 @@ namespace Letras_Simulation.Model
 
         private (double Duration, double Speed) Numerical (double power, double distance)
         {
+            if (distance < 0.001)
+                return (0, Speed);
+
             var speed    = Speed;
             var duration = 0.0;
 
-            // Using a step length of 0.1 m
-            var s = 0.1;
-            for (var i = 0.0; i < distance; i += s)
+            // Using a step length of 0.01 m
+            var s = 0.01;
+            for (var i = 0.0; i <= distance; i += Math.Max (0.001, Math.Min (s, distance - i)))
             {
                 var accelerationPower = GetAccelerationPower (power, speed);
                 var time              = s / speed;
