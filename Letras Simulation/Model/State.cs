@@ -32,11 +32,11 @@ namespace Letras_Simulation.Model
         /**
          * Returns true if the final trackpoint is reached
          */
-        public bool Step (double power)
+        public bool Step (double power, double precision = 0.01)
         {
             var distance = Tour.GetDistance (TrackpointIndex);
 
-            var (time, speed) = Numerical (power, distance);
+            var (time, speed) = Numerical (power, distance, precision);
 
             Speed = speed;
             TrackpointIndex++;
@@ -47,7 +47,7 @@ namespace Letras_Simulation.Model
             return TrackpointIndex >= Tour.Trackpoints.Count - 1;
         }
 
-        private (double Duration, double Speed) Numerical (double power, double distance)
+        private (double Duration, double Speed) Numerical (double power, double distance, double precision = 0.01)
         {
             if (distance < 0.001)
                 return (0, Speed);
@@ -55,8 +55,8 @@ namespace Letras_Simulation.Model
             var speed    = Speed;
             var duration = 0.0;
 
-            // Using a step length of 0.01 m
-            var s = 0.01;
+            // Using a default step length of 0.01 m
+            var s = precision;
             for (var i = 0.0; i <= distance; i += Math.Max (0.001, Math.Min (s, distance - i)))
             {
                 var accelerationPower = GetAccelerationPower (power, speed);
