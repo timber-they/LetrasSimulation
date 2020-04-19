@@ -47,6 +47,9 @@
     <Compile Include="Util\XmlUtil.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\Fondo.gpx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Berlin.gpx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

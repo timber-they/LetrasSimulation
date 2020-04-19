@@ -1,5 +1,6 @@
 using System;
 using System.Device.Location;
+using System.Diagnostics;
 
 
 namespace Letras_Simulation.Model
@@ -20,18 +21,37 @@ namespace Letras_Simulation.Model
 
         public double GetHorizontalDistance (Trackpoint b)
         {
-            var climb = GetClimb (b);
+            var climb    = GetClimb (b);
             var distance = GetDistance (b);
 
             if (Math.Abs (climb) < 0.0001)
                 return distance;
 
-            return climb / Math.Tan (Math.Asin (climb / distance));
+            var factor = climb / distance;
+
+            // This should not happen in correct (precise) GPX files
+            if (factor > 1)
+            {
+                Debug.WriteLine ("The GPX file has to steep sections - it's probably faulty");
+                factor = 1;
+            }
+
+            if (factor < -1)
+            {
+                Debug.WriteLine ("The GPX file has to steep sections - it's probably faulty");
+                factor = -1;
+            }
+
+            return climb / Math.Tan (Math.Asin (factor));
         }
 
         public void SetLatitude (double  latitude)  => Coordinate.Latitude = latitude;
         public void SetAltitude (double  altitude)  => Coordinate.Altitude = altitude;
         public void SetLongitude (double longitude) => Coordinate.Longitude = longitude;
+
+        public double GetLatitude ()  => Coordinate.Latitude;
+        public double GetAltitude ()  => Coordinate.Altitude;
+        public double GetLongitude () => Coordinate.Longitude;
 
         /// <inheritdoc />
         public override string ToString () => $"Lat: {Coordinate.Latitude}; Lon: {Coordinate.Longitude}; Alt: {Coordinate.Altitude}";

@@ -26,8 +26,8 @@ namespace Letras_Simulation.Util
                             {
                                 case "trkpt":
                                     currentTrackPoint = new Trackpoint ();
-                                    currentTrackPoint.SetLatitude(Convert.ToDouble (xmlReader.GetAttribute ("lat"), CultureInfo.InvariantCulture));
-                                    currentTrackPoint.SetLongitude(Convert.ToDouble (xmlReader.GetAttribute ("lon"), CultureInfo.InvariantCulture));
+                                    currentTrackPoint.SetLatitude (Convert.ToDouble (xmlReader.GetAttribute ("lat"), CultureInfo.InvariantCulture));
+                                    currentTrackPoint.SetLongitude (Convert.ToDouble (xmlReader.GetAttribute ("lon"), CultureInfo.InvariantCulture));
                                     break;
                                 case "ele":
                                     readingAltitude = true;
@@ -57,6 +57,7 @@ namespace Letras_Simulation.Util
                                     readingAltitude = false;
                                     break;
                             }
+
                             break;
                     }
 
